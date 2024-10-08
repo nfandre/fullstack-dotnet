@@ -1,0 +1,29 @@
+using Dima.core.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Dima.Api.Data.Mappings;
+
+public class CategoryMapping : IEntityTypeConfiguration<Category>
+{
+    public void Configure(EntityTypeBuilder<Category> builder)
+    {
+        builder.ToTable("Category");
+        builder.HasKey(category => category.Id);
+        builder.Property(category => category.Title)
+            .IsRequired()
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(80);
+        
+        builder.Property(category => category.Descritpion)
+            .IsRequired(false)
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(255);
+        
+        builder.Property(category => category.UserId)
+            .IsRequired()
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(160);
+
+    }
+}
