@@ -14,7 +14,7 @@ public class CreateCategoryEndpoint : IEndpoint
             .WithSummary("Cria nova categoria")
             .WithDescription("Cria nova categoria")
             .WithOrder(1)
-           .Produces<Response<Category?>>(); // Com typed results não é necessário
+            .Produces<Response<Category?>>(); // Com typed results não é necessário
 
     public static async Task<IResult> HandleAsync(
         ICategoryHandler handler, CreateCategoryRequest request)

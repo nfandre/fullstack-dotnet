@@ -1,6 +1,8 @@
+using Azure;
 using Dima.Api.Common.Api;
 using Dima.core;
 using Dima.core.Handlers;
+using Dima.core.Models;
 using Dima.core.Requests.Categories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +15,8 @@ public class GetAllCategoriesEndpoint : IEndpoint
             .WithName("Categories: Get All")
             .WithSummary("Consulta todas categoria")
             .WithDescription("Consulta todas categoria")
-            .WithOrder(5);
+            .WithOrder(5)
+            .Produces<Response<Category?>>();
     
     public static async Task<IResult> HandleAsync(
         ICategoryHandler handler, 
@@ -22,7 +25,7 @@ public class GetAllCategoriesEndpoint : IEndpoint
     {
         var request = new GetAllCategoriesRequest()
         {
-            UserId = "",
+            UserId = "teste@teste.com",
             PageNumber = pageNumber,
             PageSize = pageSize
         };

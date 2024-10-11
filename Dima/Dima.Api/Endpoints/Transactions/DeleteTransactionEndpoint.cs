@@ -1,25 +1,25 @@
+using Azure;
 using Dima.Api.Common.Api;
 using Dima.core.Handlers;
 using Dima.core.Models;
-using Dima.core.Requests.Categories;
-using Dima.core.Responses;
+using Dima.core.Requests.Transactions;
 
-namespace Dima.Api.Endpoints.Categories;
+namespace Dima.Api.Endpoints.Transactions;
 
-public class DeleteCategoryEndpoint : IEndpoint
+public class DeleteTransactionEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapDelete("/{id}", HandleAsync)
-            .WithName("Categories: Delete")
-            .WithSummary("Exclui categoria")
-            .WithDescription("Exclui categoria")
+            .WithName("Transaction: Delete")
+            .WithSummary("Exclui Transaction")
+            .WithDescription("Exclui Transaction")
             .WithOrder(3)
-            .Produces<Response<Category?>>();
+            .Produces<Response<Transaction?>>();
     
     public static async Task<IResult> HandleAsync(
-        ICategoryHandler handler, long id)
+        ITransactionHandler handler, long id)
     {
-        var request = new DeleteCategoryRequest
+        var request = new DeleteTransactionRequest()
         {
             Id = id
         };
@@ -28,6 +28,5 @@ public class DeleteCategoryEndpoint : IEndpoint
         return result.isSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
-        // typed results infere o tipo do retorno
     }
 }
