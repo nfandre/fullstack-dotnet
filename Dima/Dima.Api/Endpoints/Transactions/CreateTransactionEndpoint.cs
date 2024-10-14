@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Azure;
 using Dima.Api.Common.Api;
 using Dima.core.Handlers;
@@ -17,9 +18,9 @@ public class CreateTransactionEndpoint : IEndpoint
             .Produces<Response<Transaction?>>(); // Com typed results não é necessário
 
     public static async Task<IResult> HandleAsync(
-        ITransactionHandler handler, CreateTransactionRequest request)
+        ClaimsPrincipal user, ITransactionHandler handler, CreateTransactionRequest request)
     {
-        request.UserId = "teste@teste.com";
+        request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.CreateAsync(request);
         return result.isSuccess 
             ? TypedResults.Created($"{result.Data?.Id}", result) 

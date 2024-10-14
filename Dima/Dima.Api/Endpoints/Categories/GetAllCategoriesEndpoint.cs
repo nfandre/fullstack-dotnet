@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Azure;
 using Dima.Api.Common.Api;
 using Dima.core;
@@ -19,13 +20,14 @@ public class GetAllCategoriesEndpoint : IEndpoint
             .Produces<Response<Category?>>();
     
     public static async Task<IResult> HandleAsync(
+        ClaimsPrincipal user,
         ICategoryHandler handler, 
         [FromQuery] int pageNumber = Configuration.PageNumber, 
         [FromQuery] int pageSize = Configuration.DefaultPageSize)
     {
         var request = new GetAllCategoriesRequest()
         {
-            UserId = "teste@teste.com",
+            UserId = user.Identity?.Name ?? string.Empty,
             PageNumber = pageNumber,
             PageSize = pageSize
         };

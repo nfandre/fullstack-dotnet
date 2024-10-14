@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.core.Handlers;
 using Dima.core.Models;
@@ -17,8 +18,9 @@ public class CreateCategoryEndpoint : IEndpoint
             .Produces<Response<Category?>>(); // Com typed results não é necessário
 
     public static async Task<IResult> HandleAsync(
-        ICategoryHandler handler, CreateCategoryRequest request)
+        ClaimsPrincipal user,ICategoryHandler handler, CreateCategoryRequest request)
     {
+        request.UserId = user.Identity?.Name ?? String.Empty;
         var result = await handler.CreateAsync(request);
         return result.isSuccess 
             ? TypedResults.Created($"{result.Data?.Id}", result) 

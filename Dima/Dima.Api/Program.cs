@@ -1,44 +1,28 @@
-using Dima.Api.Data;
+using Dima.Api;
+using Dima.Api.Common.Api;
 using Dima.Api.Endpoints;
-using Dima.Api.Handlers;
-using Dima.core.Handlers;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(x => x.CustomSchemaIds(n => n.FullName));
-
-// Não é possível inverter essa ordem
-// Primeiro atenticação, dps autorização
-builder.Services
-    .AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddIdentityCookies(); // Quem você é? Quem o usuário é? JWT
-builder.Services.AddAuthorization(); // O que você pode fazer? Perfis/ roles/ claims
-
-var cnnString =
-    builder
-        .Configuration
-        .GetConnectionString("DefaultConnection") ?? String.Empty;
-
-builder.Services.AddDbContext<AppDbContext>(x =>
-{
-    x.UseSqlServer(cnnString);
-});
-
-builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
-builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
-
+builder.AddConfiguration();
+builder.AddSecurity();
+builder.AddDataContexts();
+builder.AddCrossOrigin();
+builder.AddDocumentation();
+builder.AddServices();
 
 var app = builder.Build();
-app.UseSwagger();
-app.UseSwaggerUI();
 
+if(app.Environment.IsDevelopment())
+    app.ConfigureDevEnvironment();
 
-app.MapGet("/", () => new { Message = "Ok" });
+app.UseCors(ApiConfiguration.CorsPolicyName);
+
+app.UseSecurity();
 
 app.MapEndpoints();
+
+
+
 app.Run();
 
 // app.MapPost(

@@ -9,8 +9,7 @@ namespace Dima.Api.Data;
 // public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) 
-    : IdentityDbContext<
-        User, // Tabela AspNetUsers
+    : IdentityDbContext<User, // Tabela AspNetUsers
         IdentityRole<long>, // Tabela AspNetRoles ( junção AspNetUserRoles)
         long, // Tabelas, Claim, login, RoleClaim, Tokens de sessões (Modo automático)
         IdentityUserClaim<long>,

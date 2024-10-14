@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Azure;
 using Dima.Api.Common.Api;
 using Dima.core.Handlers;
@@ -17,12 +18,12 @@ public class GetCategoryByIdEndpoint : IEndpoint
             .Produces<Response<Category?>>();
     
     public static async Task<IResult> HandleAsync(
-        ICategoryHandler handler, long id)
+        ClaimsPrincipal user, ICategoryHandler handler, long id)
     {
         var request = new GetCagetoryByIdRequest
         {
             Id = id,
-            UserId = "teste@teste.com"
+            UserId = user.Identity?.Name ?? string.Empty
         };
         var result = await handler.GetByIdAsync(request);
         

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Azure;
 using Dima.Api.Common.Api;
 using Dima.core.Handlers;
@@ -17,8 +18,9 @@ public class UpdateTransactionEndpoint : IEndpoint
             .Produces<Response<Transaction?>>();
     
     public static async Task<IResult> HandleAsync(
-        ITransactionHandler handler, UpdateTransactionRequest request, long id)
+        ClaimsPrincipal user, ITransactionHandler handler, UpdateTransactionRequest request, long id)
     {
+        request.UserId = user.Identity?.Name ?? string.Empty;
         request.Id = id;
         var result = await handler.UpdateAsync(request);
         

@@ -22,19 +22,28 @@ dotnet add package  Microsoft.EntityFrameworkCore.Design
 dotnet ef migrations add v1
 
 dotnet ef database update
-## secrets
+
+### db context
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+### Identiy Framework
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+    
+### RBAC -> Role-based access control
+`Role`: perfil
+
+`Claims`: afirmações/ política de acesso
+
+### secrets
 
 dotnet user-secrets init
 dotnet user-secrets set "" ""
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=dima-dev;User ID=sa;Password=1q2w3e4r@#$;Trusted_Connection=False; TrustServerCertificate=True"
 
+user password: P@$$w0rd!;
 
-
-
-## db context
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-
-dotnet add package Microsoft.EntityFrameworkCore.Design
 
 ## image docker Mac M1 SQL Server
 docker pull mcr.microsoft.com/azure-sql-edge
