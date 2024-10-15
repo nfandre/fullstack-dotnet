@@ -13,6 +13,20 @@ dotnet add package Swashbuckle.AspNetCore
 
 dotnet add reference ../Dima.Core/
 
+### Blazor
+dotnet new blazorwasm -o Dima.Web --pwa
+
+dotnet watch run
+
+
+`pages`: @page "/login"
+`Component`: apenas conterá o html
+`Layout`: @inherits LayoutComponentBase
+
+#### MudBlazor bootstra
+dotnet add package MudBlazor
+
+
 ### Migrations
 dotnet tool install --global dotnet-ef
 dotnet tool update --global dotnet-ef
@@ -45,7 +59,7 @@ dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,
 user password: P@$$w0rd!;
 
 
-## image docker Mac M1 SQL Server
+### image docker Mac M1 SQL Server
 docker pull mcr.microsoft.com/azure-sql-edge
 
 https://balta.io/blog/sql-server-docker
