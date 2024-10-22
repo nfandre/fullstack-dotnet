@@ -27,7 +27,7 @@ public class DeleteTransactionEndpoint : IEndpoint
         };
         var result = await handler.DeleteAsync(request);
         
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
     }

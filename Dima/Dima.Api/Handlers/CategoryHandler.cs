@@ -17,7 +17,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
             {
                 UserId = request.UserId,
                 Title = request.Title,
-                Descritpion = request.Description
+                Description = request.Description
             };
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
@@ -45,7 +45,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
                 return new Response<Category?>(null, StatusCodes.Status404NotFound, "Categoria não encontrada");
 
             category.Title = request.Title;
-            category.Descritpion = request.Description;
+            category.Description = request.Description;
 
             context.Categories.Update(category);
             await context.SaveChangesAsync();
@@ -86,7 +86,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
 
     }
 
-    public async Task<Response<Category?>> GetByIdAsync(GetCagetoryByIdRequest request)
+    public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
     {
         try
         {

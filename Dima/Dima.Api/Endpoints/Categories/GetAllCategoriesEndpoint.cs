@@ -33,7 +33,7 @@ public class GetAllCategoriesEndpoint : IEndpoint
         };
         var result = await handler.GetAllAsync(request);
         
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
         // typed results infere o tipo do retorno

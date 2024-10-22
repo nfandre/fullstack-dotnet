@@ -1,5 +1,6 @@
 using Dima.Api.Data;
 using Dima.core.Common.Extensions;
+using Dima.core.Enums;
 using Dima.core.Handlers;
 using Dima.core.Models;
 using Dima.core.Requests.Transactions;
@@ -12,6 +13,8 @@ public class TransactionHandler(AppDbContext context): ITransactionHandler
 {
     public async Task<Response<Transaction?>> CreateAsync(CreateTransactionRequest request)
     {
+        if (request is { Type: ETransactionType.Withdraw, Amount: >= 0 })
+            request.Amount *= -1;
         try
         {
             var transaction = new Transaction
@@ -20,7 +23,7 @@ public class TransactionHandler(AppDbContext context): ITransactionHandler
                 CategoryId = request.CategoryId,
                 CreatedAt = DateTime.Now,
                 Amount = request.Amount,
-                PaidOrReceivedAt = request.PairdOrReceivedAt,
+                PaidOrReceivedAt = request.PaidOrReceivedAt,
                 Title = request.Title,
                 Type = request.Type
             };
@@ -41,6 +44,8 @@ public class TransactionHandler(AppDbContext context): ITransactionHandler
 
     public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
+        if (request is { Type: ETransactionType.Withdraw, Amount: >= 0 })
+            request.Amount *= -1;
         try
         {
             var transaction = await context
@@ -134,11 +139,11 @@ public class TransactionHandler(AppDbContext context): ITransactionHandler
                 .Transactions
                 .AsNoTracking()
                 .Where(x => 
-                    x.CreatedAt >= request.StartDate 
-                    && x.CreatedAt <= request.EndDate
+                    x.PaidOrReceivedAt >= request.StartDate 
+                    && x.PaidOrReceivedAt <= request.EndDate
                     && x.UserId == request.UserId
                 )
-                .OrderBy(x => x.CreatedAt);
+                .OrderBy(x => x.PaidOrReceivedAt);
         
             var transaction = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)

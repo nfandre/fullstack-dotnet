@@ -24,7 +24,7 @@ public class UpdateCategoryEndpoint : IEndpoint
         request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.UpdateAsync(request);
         
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
         // typed results infere o tipo do retorno

@@ -27,7 +27,7 @@ public class DeleteCategoryEndpoint : IEndpoint
         };
         var result = await handler.DeleteAsync(request);
         
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
         // typed results infere o tipo do retorno

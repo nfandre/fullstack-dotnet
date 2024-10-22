@@ -22,7 +22,7 @@ public class CreateCategoryEndpoint : IEndpoint
     {
         request.UserId = user.Identity?.Name ?? String.Empty;
         var result = await handler.CreateAsync(request);
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Created($"{result.Data?.Id}", result) 
             : TypedResults.BadRequest(result.Data);
         // typed results infere o tipo do retorno

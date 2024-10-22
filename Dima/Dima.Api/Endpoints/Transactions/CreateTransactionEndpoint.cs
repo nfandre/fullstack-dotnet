@@ -22,7 +22,7 @@ public class CreateTransactionEndpoint : IEndpoint
     {
         request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.CreateAsync(request);
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Created($"{result.Data?.Id}", result) 
             : TypedResults.BadRequest(result.Data);
     }

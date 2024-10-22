@@ -25,6 +25,6 @@ public class Response<TData>
     public string? Message { get; set; } = string.Empty;
 
     [JsonIgnore]
-    public bool isSuccess 
+    public bool IsSuccess 
         => _code is >= 200 and <= 299;
 }

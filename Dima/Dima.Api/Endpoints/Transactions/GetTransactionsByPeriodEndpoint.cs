@@ -37,7 +37,7 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
         };
         var result = await handler.GetByPeriodAsync(request);
 
-        return result.isSuccess
+        return result.IsSuccess
             ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result.Data);
     }

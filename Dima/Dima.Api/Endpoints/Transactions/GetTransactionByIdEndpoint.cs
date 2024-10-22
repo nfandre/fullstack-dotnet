@@ -27,7 +27,7 @@ public class GetTransactionByIdEndpoint : IEndpoint
         };
         var result = await handler.GetByIdAsync(request);
 
-        return result.isSuccess
+        return result.IsSuccess
             ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result.Data);
     }

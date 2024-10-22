@@ -20,14 +20,14 @@ public class GetCategoryByIdEndpoint : IEndpoint
     public static async Task<IResult> HandleAsync(
         ClaimsPrincipal user, ICategoryHandler handler, long id)
     {
-        var request = new GetCagetoryByIdRequest
+        var request = new GetCategoryByIdRequest
         {
             Id = id,
             UserId = user.Identity?.Name ?? string.Empty
         };
         var result = await handler.GetByIdAsync(request);
         
-        return result.isSuccess 
+        return result.IsSuccess 
             ? TypedResults.Ok(result) 
             : TypedResults.BadRequest(result.Data);
         // typed results infere o tipo do retorno

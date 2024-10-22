@@ -23,9 +23,31 @@ dotnet watch run
 `Component`: apenas conterá o html
 `Layout`: @inherits LayoutComponentBase
 
+
+### Debug WASM
+sudo dotnet workload install wasm-tools
+
 #### MudBlazor bootstra
 dotnet add package MudBlazor
 
+#### Using Microsoft extensions http
+- Primitivo
+```csharp
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+```
+
+- Using Microsoft extensions http
+  dotnet add package Microsoft.Extensions.Http
+```csharp
+builder.Services.AddHttpClient(Configuration.HttpClientName, opt =>
+{
+    opt.BaseAddress = new Uri(Configuration.BackendUrl);
+}).AddHttpMessageHandler<CookieHandler>();
+
+public class AccountHandler(IHttpClientFactory httpClientFactory) : IAccountHandler
+```
+#### Using authentication blazor
+dotnet add package Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 ### Migrations
 dotnet tool install --global dotnet-ef
@@ -72,3 +94,9 @@ docker run -e "ACCEPT_EULA=1" -e "MSSQL_SA_PASSWORD=1q2w3e4r@#$" -e "MSSQL_PID=D
 `Transient`: Sempre cria uma nova instancia da depedência
 `Singleton`: Somente uma instancia por aplicação
 ``
+
+
+## Utilitários
+
+### Gerador de senha
+https://andrebaltieri.github.io/passpad/
